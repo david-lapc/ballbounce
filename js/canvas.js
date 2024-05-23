@@ -49,7 +49,7 @@ class Circle extends Shape {
         this.x += this.dx;
         this.y += this.dy;
 
-        if (this.x + this.r > canvas.width || this.x < 0) {
+        if (this.x + this.r > canvas.width || this.x - this.r < 0) {
             if(this.x + this.r > canvas.width){
                 this.x = canvas.width - this.r;
             }else{
@@ -57,7 +57,7 @@ class Circle extends Shape {
             }
             this.dx *= -1;
         }
-        if (this.y + this.r > canvas.height || this.y < 0) {
+        if (this.y + this.r > canvas.height || this.y - this.r < 0) {
             if(this.y + this.r > canvas.height){
                 this.y = canvas.height - this.r;
             }else{
