@@ -75,13 +75,13 @@ class Circle extends Shape {
     }
 }
 
-for(let i = 0; i < 50; i++){
+for(let i = 0; i < 100; i++){
     let xPos = (Math.random() * canvas.width);
     let yPos = (Math.random() * canvas.height);
     let r = Math.random() * 40 + 10;
     let dx = (Math.random() - 0.5) * 20;
     let dy = (Math.random() - 0.5) * 20;
-    let color = `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`;
+    let color = `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255}, ${Math.random()}`;
     circles.push(new Circle(xPos, yPos, r, dx, dy, color));
 }
 
