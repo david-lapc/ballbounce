@@ -15,73 +15,101 @@ let ctx = canvas.getContext('2d');
 
 let circles = [];
 
-window.addEventListener('resize', ()=> {
+window.addEventListener('resize', () => {
     canvas.width = window.innerWidth - 40;
     canvas.height = window.innerHeight - 200;
 });
 
-startBtn.addEventListener('click', ()=>{
+startBtn.addEventListener('click', () => {
     startAnimation();
     startBtn.disabled = true;
     stopBtn.disabled = false;
 });
-stopBtn.addEventListener('click', ()=>{
+stopBtn.addEventListener('click', () => {
     stopAnimation();
     startBtn.disabled = false;
     stopBtn.disabled = true;
 })
 
-class Shape {
-    constructor(x, y, dx, dy, color){
+class Vector {
+    constructor(x, y) {
         this.x = x;
         this.y = y;
-        this.dx = dx;
-        this.dy = dy;
+    }
+    getDistance(vector1, vector2) {
+        return Math.sqrt(Math.pow(vector1.x - vector2.x, 2) + Math.pow(vector1.y - vector2.y, 2));
+    }
+}
+
+class Shape {
+    constructor(x, y, dx, dy, color) {
+        this.pos = new Vector(x, y);
+        this.vel = new Vector(dx, dy);
         this.color = color;
+        this.originalColor = color;
     }
 }
 
 class Circle extends Shape {
-    constructor(x, y, r, dx, dy, color){
+    constructor(x, y, r, dx, dy, color) {
         super(x, y, dx, dy, color);
         this.r = r;
     }
-    draw(){
+    draw() {
         ctx.fillStyle = this.color;
         ctx.beginPath();
-        ctx.arc(this.x, this.y, this.r, 0, Math.PI*2);
+        ctx.arc(this.pos.x, this.pos.y, this.r, 0, Math.PI * 2);
         ctx.fill();
     }
-    update(){
-        this.x += this.dx;
-        this.y += this.dy;
 
-        if (this.x + this.r > canvas.width || this.x - this.r < 0) {
-            if(this.x + this.r > canvas.width){
-                this.x = canvas.width - this.r;
-            }else{
-                this.x = this.r;
+    checkCollision() {
+        circles.find(circle => {
+            if (circle != this) {
+                let distance = new Vector().getDistance(this.pos, circle.pos);
+                if (distance < this.r + circle.r) {
+                    this.color = 'red';
+                    return true;
+                }
+                if (distance > this.r + circle.r) {
+                    this.color = this.originalColor;
+                }
             }
-            this.dx *= -1;
+        });
+    }
+
+    update() {
+        this.pos.x += this.vel.x;
+        this.pos.y += this.vel.y;
+
+        this.checkCollision();
+
+        if (this.pos.x + this.r > canvas.width || this.pos.x - this.r < 0) {
+            if (this.pos.x + this.r > canvas.width) {
+                this.pos.x = canvas.width - this.r;
+            } else {
+                this.pos.x = this.r;
+            }
+            this.vel.x *= -1;
         }
-        if (this.y + this.r > canvas.height || this.y - this.r < 0) {
-            if(this.y + this.r > canvas.height){
-                this.y = canvas.height - this.r;
-            }else{
-                this.y = this.r;
+        if (this.pos.y + this.r > canvas.height || this.pos.y - this.r < 0) {
+            if (this.pos.y + this.r > canvas.height) {
+                this.pos.y = canvas.height - this.r;
+            } else {
+                this.pos.y = this.r;
             }
-            this.dy *= -1;
+            this.vel.y *= -1;
         }
     }
 }
 
-for(let i = 0; i < 100; i++){
+for (let i = 0; i < 20; i++) {
     let xPos = (Math.random() * canvas.width);
     let yPos = (Math.random() * canvas.height);
     let r = Math.random() * 40 + 10;
     let dx = (Math.random() - 0.5) * 20;
     let dy = (Math.random() - 0.5) * 20;
-    let color = `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255}, ${Math.random()}`;
+    let shadeOfGrey = Math.random() * 240;
+    let color = `rgba(${shadeOfGrey}, ${shadeOfGrey}, ${shadeOfGrey}, ${Math.random()})`;
     circles.push(new Circle(xPos, yPos, r, dx, dy, color));
 }
 
@@ -90,7 +118,7 @@ let fps = 1000 / 60;
 let animation;
 
 function startAnimation(deltaTime = 0) {
-    if(deltaTime - lastTime > fps) {
+    if (deltaTime - lastTime > fps) {
         lastTime = deltaTime;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         circles.forEach(circle => {
