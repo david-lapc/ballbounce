@@ -67,11 +67,11 @@ class Circle extends Shape {
             if (circle != this) {
                 let distance = new Vector().getDistance(this.pos, circle.pos);
                 if (distance < this.r + circle.r) {
-                    this.color = 'red';
+                    this.color = 'green';  // Change color here
                     return true;
                 }
                 if (distance > this.r + circle.r) {
-                    this.color = this.originalColor;
+                    this.color = this.originalColor;  // Change color here
                 }
             }
         });
@@ -103,15 +103,29 @@ class Circle extends Shape {
 }
 
 for (let i = 0; i < 20; i++) {
-    let xPos = (Math.random() * canvas.width);
-    let yPos = (Math.random() * canvas.height);
+    let xPos = Math.random() * canvas.width;
+    let yPos = Math.random() * canvas.height;
     let r = Math.random() * 40 + 10;
     let dx = (Math.random() - 0.5) * 20;
     let dy = (Math.random() - 0.5) * 20;
-    let shadeOfGrey = Math.random() * 240;
-    let color = `rgba(${shadeOfGrey}, ${shadeOfGrey}, ${shadeOfGrey}, ${Math.random()})`;
+
+    // Generate random color
+    let color;
+    if (Math.random() < 0.5) {
+        // Shades of grey
+        let shadeOfGrey = Math.random() * 200 + 55; // 55-255 range
+        color = `rgb(${shadeOfGrey}, ${shadeOfGrey}, ${shadeOfGrey})`;
+    } else {
+        // Random color
+        let rColor = Math.random() * 255;
+        let gColor = Math.random() * 255;
+        let bColor = Math.random() * 255;
+        color = `rgb(${rColor}, ${gColor}, ${bColor})`;
+    }
+
     circles.push(new Circle(xPos, yPos, r, dx, dy, color));
 }
+
 
 let lastTime = 0;
 let fps = 1000 / 60;
