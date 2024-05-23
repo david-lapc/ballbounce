@@ -9,9 +9,16 @@
 let startBtn = document.getElementById('startBtn');
 let stopBtn = document.getElementById('stopBtn');
 let canvas = document.getElementById('canvas');
+canvas.width = window.innerWidth - 40;
+canvas.height = window.innerHeight - 200;
 let ctx = canvas.getContext('2d');
 
 let circles = [];
+
+window.addEventListener('resize', ()=> {
+    canvas.width = window.innerWidth - 40;
+    canvas.height = window.innerHeight - 200;
+});
 
 startBtn.addEventListener('click', ()=>{
     startAnimation();
@@ -68,12 +75,12 @@ class Circle extends Shape {
     }
 }
 
-for(let i = 0; i < 10; i++){
+for(let i = 0; i < 50; i++){
     let xPos = (Math.random() * canvas.width);
     let yPos = (Math.random() * canvas.height);
     let r = Math.random() * 40 + 10;
-    let dx = (Math.random() - 0.5) * 10;
-    let dy = (Math.random() - 0.5) * 10;
+    let dx = (Math.random() - 0.5) * 20;
+    let dy = (Math.random() - 0.5) * 20;
     let color = `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`;
     circles.push(new Circle(xPos, yPos, r, dx, dy, color));
 }
@@ -97,3 +104,18 @@ function startAnimation(deltaTime = 0) {
 function stopAnimation() {
     cancelAnimationFrame(animation);
 }
+
+// function startAnimation() {
+//     animation = setInterval(
+//         function(){
+//         ctx.clearRect(0, 0, canvas.width, canvas.height);
+//         circles.forEach(circle => {
+//             circle.draw();
+//             circle.update();
+//         });
+//     }, 1000/60);
+// }
+
+// function stopAnimation() {
+//    clearInterval(animation);
+// }
