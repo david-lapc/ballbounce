@@ -62,18 +62,15 @@ stopBtn.addEventListener('click', () => {
 
 // EF: event handling added for speed buttons
 speedNormBtn.addEventListener('click', () => {
-    stopAnimation();
     changeSpeed();
     startAnimation();
 });
 
 speedUpBtn.addEventListener('click', () => {
-    stopAnimation();
     changeSpeed(100);
-    startAnimation();
+    startAnimation(); 
 });
 speedDownBtn.addEventListener('click', () => {
-    stopAnimation();
     changeSpeed(10);
     startAnimation();
 });

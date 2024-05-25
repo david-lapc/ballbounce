@@ -44,6 +44,10 @@ canvas{
 EF: additonal style for speed controls
 ***************************************
 */
+
+
+button { cursor: pointer; } /* EF: mouse pointer for all buttons */
+
 .speedBtn{
     background-color: rgb(0, 128, 255);
     border: none;
@@ -57,4 +61,32 @@ EF: additonal style for speed controls
     border: solid 1px #00af8f;
     margin: 10px;
     border-radius: 10px;
-}
+} 
+
+/*
+Additional icons for buttons:
+*/
+
+.gg-play-button {
+    box-sizing: border-box;
+    position: relative;
+    display: block;
+    transform: scale(var(--ggs,1));
+    width: 22px;
+    height: 22px
+   }
+   
+   .gg-play-button::before {
+    content: "";
+    display: block;
+    box-sizing: border-box;
+    position: absolute;
+    width: 0;
+    height: 10px;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-left: 6px solid;
+    top: 6px;
+    left: 9px
+   } 
+
