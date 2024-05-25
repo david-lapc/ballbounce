@@ -20,6 +20,11 @@ Description: Assignment No. 5
 let startBtn = document.getElementById('startBtn');
 let stopBtn = document.getElementById('stopBtn');
 let canvas = document.getElementById('canvas');
+
+let speedNormBtn   = document.getElementById('speedNormBtn'); // EF: additional button added
+let speedUpBtn     = document.getElementById('speedUpdBtn'); // EF: additional button added
+let speedDownBtn   = document.getElementById('speedDownBtn'); // EF: additional button added
+
 canvas.width = window.innerWidth - 40;
 canvas.height = window.innerHeight - 200;
 let ctx = canvas.getContext('2d');
@@ -35,12 +40,43 @@ startBtn.addEventListener('click', () => {
     startAnimation();
     startBtn.disabled = true;
     stopBtn.disabled = false;
+
+     // speed btns enable if start
+     speedNormBtn.disabled = false;
+     speedUpBtn.disabled = false;
+     speedDownBtn.disabled = false;
+
+    
 });
 stopBtn.addEventListener('click', () => {
     stopAnimation();
     startBtn.disabled = false;
     stopBtn.disabled = true;
+
+    // speed btns disabled if stop
+    speedNormBtn.disabled = true;
+    speedUpBtn.disabled = true;
+    speedDownBtn.disabled = true;
 })
+
+
+// EF: event handling added for speed buttons
+speedNormBtn.addEventListener('click', () => {
+    stopAnimation();
+    changeSpeed();
+    startAnimation();
+});
+
+speedUpBtn.addEventListener('click', () => {
+    stopAnimation();
+    changeSpeed(100);
+    startAnimation();
+});
+speedDownBtn.addEventListener('click', () => {
+    stopAnimation();
+    changeSpeed(10);
+    startAnimation();
+});
 
 class Vector {
     constructor(x, y) {
@@ -124,9 +160,16 @@ for (let i = 0; i < 20; i++) {
     circles.push(new Circle(xPos, yPos, r, dx, dy, color));
 }
 
+
 let lastTime = 0;
 let fps = 1000 / 60;
 let animation;
+
+// EF: additional function to define animation speed
+function changeSpeed(fps_update = 30) {
+    fps = 1000 / fps_update;
+}
+
 
 function startAnimation(deltaTime = 0) {
     if (deltaTime - lastTime > fps) {
@@ -137,6 +180,7 @@ function startAnimation(deltaTime = 0) {
             circle.update();
         });
     }
+    cancelAnimationFrame(animation); // EF: added to avoid multiple instance of animations
     animation = requestAnimationFrame(startAnimation);
 }
 
