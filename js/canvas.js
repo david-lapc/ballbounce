@@ -162,7 +162,7 @@ for (let i = 0; i < 20; i++) {
 
 
 let lastTime = 0;
-let fps = 1000 / 60;
+let fps = 1000 / 30;
 let animation;
 
 // EF: additional function to define animation speed
