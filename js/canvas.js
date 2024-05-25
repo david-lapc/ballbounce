@@ -8,6 +8,8 @@
 
 let startBtn = document.getElementById('startBtn');
 let stopBtn = document.getElementById('stopBtn');
+let pink = document.getElementById('pink');
+let blue = document.getElementById('blue');
 let canvas = document.getElementById('canvas');
 canvas.width = window.innerWidth - 40;
 canvas.height = window.innerHeight - 200;
@@ -30,6 +32,12 @@ stopBtn.addEventListener('click', ()=>{
     startBtn.disabled = false;
     stopBtn.disabled = true;
 })
+
+pink.addEventListener('click', () => {
+    changeColor();
+    startAnimation();
+});
+
 
 class Shape {
     constructor(x, y, dx, dy, color){
@@ -81,7 +89,7 @@ for(let i = 0; i < 100; i++){
     let r = Math.random() * 40 + 10;
     let dx = (Math.random() - 0.5) * 20;
     let dy = (Math.random() - 0.5) * 20;
-    let color = `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255}, ${Math.random()}`;
+    let color = `#FEC6F0`;
     circles.push(new Circle(xPos, yPos, r, dx, dy, color));
 }
 
