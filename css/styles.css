@@ -25,7 +25,7 @@ canvas{
     border-radius: 5px;
     margin: 10px;
 }#pink{
-    background-color: rgb(231, 144, 238);
+    background-color: pink;
     border: none;
     padding: 5px 20px;
     border-radius: 5px;
@@ -33,6 +33,13 @@ canvas{
 }
 #blue{
     background-color: rgb(180, 225, 238);
+    border: none;
+    padding: 5px 20px;
+    border-radius: 5px;
+    margin: 10px;
+}
+#black{
+    background-color: rgb(36, 36, 36);
     border: none;
     padding: 5px 20px;
     border-radius: 5px;
