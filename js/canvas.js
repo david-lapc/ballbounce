@@ -10,6 +10,7 @@ let startBtn = document.getElementById('startBtn');
 let stopBtn = document.getElementById('stopBtn');
 let pink = document.getElementById('pink');
 let blue = document.getElementById('blue');
+let black = document.getElementById('black');
 let canvas = document.getElementById('canvas');
 canvas.width = window.innerWidth - 40;
 canvas.height = window.innerHeight - 200;
@@ -26,16 +27,40 @@ startBtn.addEventListener('click', ()=>{
     startAnimation();
     startBtn.disabled = true;
     stopBtn.disabled = false;
+
+    pink.disabled = false;
+    blue.disabled = false;
+    black.disabled = false;
+    
 });
 stopBtn.addEventListener('click', ()=>{
     stopAnimation();
     startBtn.disabled = false;
     stopBtn.disabled = true;
-})
+
+    pink.disabled = true;
+    blue.disabled = true;
+    black.disabled = true;
+    
+
+});
 
 pink.addEventListener('click', () => {
-    changeColor();
+    pinkfunction();
     startAnimation();
+    
+});
+
+blue.addEventListener('click', () => {
+    bluefunction();
+    startAnimation();
+    
+});
+
+black.addEventListener('click', () => {
+    blackfunction();
+    startAnimation();
+    
 });
 
 
@@ -83,15 +108,40 @@ class Circle extends Shape {
     }
 }
 
+
+let colorArray = ['#7C84C6', '#F3D5F6', '#CDB6E1', '#E195E5', '#B5E5CB'];
+let color = "red";
+
+function pinkfunction() {
+    document.getElementById("canvas").style.backgroundColor = "pink";
+  }
+
+  function bluefunction() {
+    document.getElementById("canvas").style.backgroundColor = '#7B9EC0';
+  }
+
+  function blackfunction() {
+    document.getElementById("canvas").style.backgroundColor = "black";
+  }
+
+
+
+
+
+
+
 for(let i = 0; i < 100; i++){
     let xPos = (Math.random() * canvas.width);
     let yPos = (Math.random() * canvas.height);
     let r = Math.random() * 40 + 10;
     let dx = (Math.random() - 0.5) * 20;
     let dy = (Math.random() - 0.5) * 20;
-    let color = `#FEC6F0`;
+    let color = colorArray[Math.floor(Math.random() * colorArray.length)];
     circles.push(new Circle(xPos, yPos, r, dx, dy, color));
 }
+
+
+
 
 let lastTime = 0;
 let fps = 1000 / 60;
@@ -106,6 +156,7 @@ function startAnimation(deltaTime = 0) {
             circle.update();
         });
     }
+    cancelAnimationFrame(animation);
     animation = requestAnimationFrame(startAnimation);
 }
 
