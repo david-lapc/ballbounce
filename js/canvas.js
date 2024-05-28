@@ -8,6 +8,7 @@
 
 let startBtn = document.getElementById('startBtn');
 let stopBtn = document.getElementById('stopBtn');
+let changeColorBtn = document.getElementById('changeColorBtn');
 let canvas = document.getElementById('canvas');
 canvas.width = window.innerWidth - 40;
 canvas.height = window.innerHeight - 200;
@@ -29,6 +30,13 @@ stopBtn.addEventListener('click', () => {
     stopAnimation();
     startBtn.disabled = false;
     stopBtn.disabled = true;
+})
+
+changeColorBtn.addEventListener('click', () => {
+    for (let i = 0; i < 20; i++) {
+        circles[i].color = `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`;
+    }
+    startAnimation();
 })
 
 class Vector {
