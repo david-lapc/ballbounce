@@ -8,12 +8,18 @@
 
 let startBtn = document.getElementById('startBtn');
 let stopBtn = document.getElementById('stopBtn');
+let colorBtn = document.getElementById('colorBtn');
 let canvas = document.getElementById('canvas');
+
 canvas.width = window.innerWidth - 40;
 canvas.height = window.innerHeight - 200;
 let ctx = canvas.getContext('2d');
 
 let circles = [];
+let colors = ['blue', 'green', 'yellow', 'pink','cyan'];
+let backgroundColor='white';
+let ballColor = 'black';
+
 
 window.addEventListener('resize', () => {
     canvas.width = window.innerWidth - 40;
@@ -29,7 +35,12 @@ stopBtn.addEventListener('click', () => {
     stopAnimation();
     startBtn.disabled = false;
     stopBtn.disabled = true;
-})
+});
+// color button
+colorBtn.addEventListener('click', () => {
+    changeColors();
+});
+
 
 class Vector {
     constructor(x, y) {
@@ -67,7 +78,7 @@ class Circle extends Shape {
             if (circle != this) {
                 let distance = new Vector().getDistance(this.pos, circle.pos);
                 if (distance < this.r + circle.r) {
-                    this.color = 'red';
+                    this.color = 'random';
                     return true;
                 }
                 if (distance > this.r + circle.r) {
@@ -131,6 +142,15 @@ function startAnimation(deltaTime = 0) {
 
 function stopAnimation() {
     cancelAnimationFrame(animation);
+}
+// change color function
+function changeColors() {
+    backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    ballColor = colors[Math.floor(Math.random() * colors.length)];
+    circles.forEach(circle => {
+        circle.color = ballColor;
+        circle.originalColor = ballColor;
+    });
 }
 
 // function startAnimation() {
