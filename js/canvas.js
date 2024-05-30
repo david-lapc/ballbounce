@@ -25,12 +25,42 @@ startBtn.addEventListener('click', () => {
     startAnimation();
     startBtn.disabled = true;
     stopBtn.disabled = false;
+
+    pink.disabled = false;
+    blue.disabled = false;
+    black.disabled = false;
+
 });
 stopBtn.addEventListener('click', () => {
     stopAnimation();
     startBtn.disabled = false;
     stopBtn.disabled = true;
-})
+
+    pink.disabled = true;
+    blue.disabled = true;
+    black.disabled = true;
+
+
+});
+
+pink.addEventListener('click', () => {
+    pinkfunction();
+    startAnimation();
+
+});
+
+blue.addEventListener('click', () => {
+    bluefunction();
+    startAnimation();
+
+});
+
+black.addEventListener('click', () => {
+    blackfunction();
+    startAnimation();
+
+});
+
 
 changeColorBtn.addEventListener('click', () => {
     for (let i = 0; i < 20; i++) {
@@ -110,6 +140,28 @@ class Circle extends Shape {
     }
 }
 
+
+let colorArray = ['#7C84C6', '#F3D5F6', '#CDB6E1', '#E195E5', '#B5E5CB'];
+let color = "red";
+
+function pinkfunction() {
+    document.getElementById("canvas").style.backgroundColor = "pink";
+}
+
+function bluefunction() {
+    document.getElementById("canvas").style.backgroundColor = '#7B9EC0';
+}
+
+function blackfunction() {
+    document.getElementById("canvas").style.backgroundColor = "black";
+}
+
+
+
+
+
+
+
 for (let i = 0; i < 20; i++) {
     let xPos = (Math.random() * canvas.width);
     let yPos = (Math.random() * canvas.height);
@@ -120,6 +172,9 @@ for (let i = 0; i < 20; i++) {
     let color = `rgba(${shadeOfGrey}, ${shadeOfGrey}, ${shadeOfGrey}, ${Math.random()})`;
     circles.push(new Circle(xPos, yPos, r, dx, dy, color));
 }
+
+
+
 
 let lastTime = 0;
 let fps = 1000 / 60;
@@ -134,6 +189,7 @@ function startAnimation(deltaTime = 0) {
             circle.update();
         });
     }
+    cancelAnimationFrame(animation);
     animation = requestAnimationFrame(startAnimation);
 }
 
